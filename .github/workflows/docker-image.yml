@@ -20,7 +20,8 @@ jobs:
         echo $GDN_MDC_CLI_CLIENT_ID=${{secrets.GDN_MDC_CLI_CLIENT_ID}}
         echo $GDN_MDC_CLI_CLIENT_SECRET=${{secrets.GDN_MDC_CLI_CLIENT_SECRET}}
         echo $GDN_MDC_CLI_TENANT_ID=${{secrets.GDN_MDC_CLI_TENANT_ID}}
-        echo ${{vars.GDN_TRIVY_TARGET}}
+        echo $GDN_TRIVY_TARGET=${{vars.GDN_TRIVY_TARGET}}
+        echo $GDN_TRIVY_ACTION=${{vars.GDN_TRIVY_ACTION}}
         echo ${{secrets.DOCKER_PASSWORD}} | docker login --username ${{secrets.DOCKER_USERNAME}} --password-stdin ${{secrets.DOCKER_REGISTRY}}
         docker build -t ${{vars.IMAGE_NAME}} .
         docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:V${{github.run_number}}

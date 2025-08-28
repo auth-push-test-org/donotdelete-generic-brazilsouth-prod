@@ -18,3 +18,15 @@ jobs:
       # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
         echo ${{vars.GDN_TRIVY_TARGET}}
+        echo ${{vars.DOCKER_PASSWORD}} | docker login --username ${{vars.DOCKER_USERNAME}} --password-stdin ${{vars.DOCKER_REGISTRY}}
+        docker build -t ${{vars.IMAGE_NAME}} .
+        docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:V${{github.run_number}}
+        docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:latest
+        docker push --all-tags ${{vars.GDN_TRIVY_TARGET}}
+        unzip -o ./msdo-linux-x64.zip
+        chmod +x msdo-linux-x64/guardian
+        chmod +x msdo-linux-x64/Microsoft.Guardian.Cli
+        msdo-linux-x64/guardian init --force
+        msdo-linux-x64/guardian run -t trivy --export-file ./ubuntu-test.sarif --publish-file-folder-path ./ubuntu-test.sarif --not-break-on-detections
+        
+

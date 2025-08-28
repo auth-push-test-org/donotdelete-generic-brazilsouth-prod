@@ -18,7 +18,7 @@ jobs:
       # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
         echo ${{vars.GDN_TRIVY_TARGET}}
-        echo ${{vars.DOCKER_PASSWORD}} | docker login --username ${{vars.DOCKER_USERNAME}} --password-stdin ${{vars.DOCKER_REGISTRY}}
+        echo ${{secrets.DOCKER_PASSWORD}} | docker login --username ${{secrets.DOCKER_USERNAME}} --password-stdin ${{secrets.DOCKER_REGISTRY}}
         docker build -t ${{vars.IMAGE_NAME}} .
         docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:V${{github.run_number}}
         docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:latest

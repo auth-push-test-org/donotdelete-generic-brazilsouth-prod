@@ -17,6 +17,9 @@ jobs:
     - name: Build the Docker image
       # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
+        echo $GDN_MDC_CLI_CLIENT_ID=${{secrets.GDN_MDC_CLI_CLIENT_ID}}
+        echo $GDN_MDC_CLI_CLIENT_SECRET=${{secrets.GDN_MDC_CLI_CLIENT_SECRET}}
+        echo $GDN_MDC_CLI_TENANT_ID=${{secrets.GDN_MDC_CLI_TENANT_ID}}
         echo ${{vars.GDN_TRIVY_TARGET}}
         echo ${{secrets.DOCKER_PASSWORD}} | docker login --username ${{secrets.DOCKER_USERNAME}} --password-stdin ${{secrets.DOCKER_REGISTRY}}
         docker build -t ${{vars.IMAGE_NAME}} .

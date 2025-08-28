@@ -22,6 +22,8 @@ jobs:
         export GDN_MDC_CLI_TENANT_ID=${{secrets.GDN_MDC_CLI_TENANT_ID}}
         export GDN_TRIVY_TARGET=${{vars.GDN_TRIVY_TARGET}}
         export GDN_TRIVY_ACTION=${{vars.GDN_TRIVY_ACTION}}
+        export GDN_PIPELINE_ID=${{vars.GDN_PIPELINE_ID}}
+        export GDN_PIPELINE_URL=${{vars.GDN_PIPELINE_URL}}
         echo ${{secrets.DOCKER_PASSWORD}} | docker login --username ${{secrets.DOCKER_USERNAME}} --password-stdin ${{secrets.DOCKER_REGISTRY}}
         docker build -t ${{vars.IMAGE_NAME}} .
         docker tag ${{vars.IMAGE_NAME}} ${{vars.GDN_TRIVY_TARGET}}:V${{github.run_number}}

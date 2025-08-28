@@ -18,11 +18,11 @@ jobs:
       # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
         echo $DOCKER_PASSWORD
-        echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin $DOCKER_REGISTRY
-        docker build -t $IMAGE_NAME .
-        docker tag $IMAGE_NAME $GDN_TRIVY_TARGET:V${{github.run_number}}
-        docker tag $IMAGE_NAME $GDN_TRIVY_TARGET:latest
-        docker push --all-tags $GDN_TRIVY_TARGET
+        echo ${{DOCKER_PASSWORD}} | docker login --username ${{DOCKER_USERNAME}} --password-stdin ${{DOCKER_REGISTRY}}
+        docker build -t ${{IMAGE_NAME}} .
+        docker tag ${{IMAGE_NAME}} ${{GDN_TRIVY_TARGET}}:V${{github.run_number}}
+        docker tag ${{IMAGE_NAME}} ${{GDN_TRIVY_TARGET}}:latest
+        docker push --all-tags ${{GDN_TRIVY_TARGET}}
         unzip -o ./msdo-linux-x64.zip
         chmod +x msdo-linux-x64/guardian
         chmod +x msdo-linux-x64/Microsoft.Guardian.Cli

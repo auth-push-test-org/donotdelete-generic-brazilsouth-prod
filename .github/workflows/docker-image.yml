@@ -15,4 +15,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        - docker login $DOCKER_REGISTRY --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+        - docker build -t $IMAGE_NAME .
+        - docker tag $IMAGE_NAME $GDN_TRIVY_TARGET:V${{github.run_number}}
+        - docker tag $IMAGE_NAME $GDN_TRIVY_TARGET:latest
+        - docker push --all-tags $GDN_TRIVY_TARGET
+        - unzip -o ./msdo-linux-x64.zip
+        - chmod +x msdo-linux-x64/guardian
+        - chmod +x msdo-linux-x64/Microsoft.Guardian.Cli
+        - msdo-linux-x64/guardian init --force
+        - msdo-linux-x64/guardian run -t trivy --export-file ./ubuntu-test.sarif --publish-file-folder-path ./ubuntu-test.sarif --not-break-on-detections
+        

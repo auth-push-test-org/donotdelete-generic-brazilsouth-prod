@@ -18,14 +18,14 @@ jobs:
       # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
         echo ${{env.GDN_TRIVY_TARGET}}
-        # echo ${{DOCKER_PASSWORD}} | docker login --username ${{DOCKER_USERNAME}} --password-stdin ${{DOCKER_REGISTRY}}
-        # docker build -t ${{IMAGE_NAME}} .
-        # docker tag ${{IMAGE_NAME}} ${{GDN_TRIVY_TARGET}}:V${{github.run_number}}
-        # docker tag ${{IMAGE_NAME}} ${{GDN_TRIVY_TARGET}}:latest
-        # docker push --all-tags ${{GDN_TRIVY_TARGET}}
-        # unzip -o ./msdo-linux-x64.zip
-        # chmod +x msdo-linux-x64/guardian
-        # chmod +x msdo-linux-x64/Microsoft.Guardian.Cli
-        # msdo-linux-x64/guardian init --force
-        # msdo-linux-x64/guardian run -t trivy --export-file ./ubuntu-test.sarif --publish-file-folder-path ./ubuntu-test.sarif --not-break-on-detections
+        echo ${{env.DOCKER_PASSWORD}} | docker login --username ${{env.DOCKER_USERNAME}} --password-stdin ${{env.DOCKER_REGISTRY}}
+        docker build -t ${{env.IMAGE_NAME}} .
+        docker tag ${{env.IMAGE_NAME}} ${{env.GDN_TRIVY_TARGET}}:V${{github.run_number}}
+        docker tag ${{env.IMAGE_NAME}} ${{env.GDN_TRIVY_TARGET}}:latest
+        docker push --all-tags ${{env.GDN_TRIVY_TARGET}}
+        unzip -o ./msdo-linux-x64.zip
+        chmod +x msdo-linux-x64/guardian
+        chmod +x msdo-linux-x64/Microsoft.Guardian.Cli
+        msdo-linux-x64/guardian init --force
+        msdo-linux-x64/guardian run -t trivy --export-file ./ubuntu-test.sarif --publish-file-folder-path ./ubuntu-test.sarif --not-break-on-detections
         

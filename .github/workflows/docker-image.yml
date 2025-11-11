@@ -46,9 +46,8 @@ jobs:
           docker build -t ${{vars.IMAGE_NAME}} .
           docker tag ${{vars.IMAGE_NAME}} ${{vars.IMAGE_TARGET}}:V${{github.run_number}}
           docker tag ${{vars.IMAGE_NAME}} ${{vars.IMAGE_TARGET}}:latest
-          docker push --all-tags ${{vars.IMAGE_TARGET}}
+          docker push  ${{vars.IMAGE_TARGET}}:V${{github.run_number}}
           curl -L -o defender https://cli.dfd.security.stage.azure-test.net/public/latest/Defender_linux-x64
           chmod +x defender
           ./defender scan image ${{vars.IMAGE_TARGET}}
-          docker push --all-tags ${{vars.IMAGE_TARGET}}
           

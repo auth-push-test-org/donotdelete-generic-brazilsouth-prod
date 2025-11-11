@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 RUN mvn package
-RUN echo 12a11 > out.out
+RUN echo 12a111 > out.out
 ENV PORT 5000
 EXPOSE $PORT
 CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]

@@ -1,4 +1,4 @@
-name: Docker Image CI BrazilSouth
+name: Docker Image CI BrazilSouth 2
 
 # Controls when the workflow will run 
 on:
@@ -42,7 +42,7 @@ jobs:
           GDN_NUGET_SOURCE_FEED_OVERRIDE: https://pkgs.dev.azure.com/msdoustest/msdo/_packaging/msdotestfeed2/nuget/v3/index.json
 
         run: |
-          echo ${{secrets.DOCKER_PASSWORD-CONTAINERS}} | docker login --username ${{secrets.DOCKER_USERNAME-CONTAINERS}} --password-stdin ${{secrets.DOCKER_REGISTRY-CONTAINERS}}
+          echo ${{secrets.DOCKER_PASSWORD_CONTAINERS}} | docker login --username ${{secrets.DOCKER_USERNAME_CONTAINERS}} --password-stdin ${{secrets.DOCKER_REGISTRY_CONTAINERS}}
           docker build -t ${{vars.IMAGE_NAME}} .
           docker tag ${{vars.IMAGE_NAME}} ${{vars.IMAGE_TARGET}}:V${{github.run_number}}
           docker tag ${{vars.IMAGE_NAME}} ${{vars.IMAGE_TARGET}}:latest

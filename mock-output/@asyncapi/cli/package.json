@@ -1,0 +1,7 @@
+{
+  "name": "@asyncapi/cli",
+  "version": "asyncapi/cli@4.1.2",
+  "bin": {
+    "_asyncapi_cli": "index.js"
+  }
+}

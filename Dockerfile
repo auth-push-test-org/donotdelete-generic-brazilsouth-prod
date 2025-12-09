@@ -1,12 +1,12 @@
 FROM node:18-alpine
 WORKDIR /app
 
-# Copy mock packages
+# Copy mock package
 COPY mock-output /mock
 
-# Install each mock package globally
-RUN for d in /mock/*; do \
-      cd "$d" && npm pack && npm install -g *.tgz; \
-    done
+# Pack and install the mock package
+RUN cd /mock/@asyncapi/cli && \
+    npm pack && \
+    npm install -g *.tgz
 
-CMD ["node", "-e", "console.log('Mock packages installed successfully')"]
+CMD ["node", "-e", "console.log('Mock package installed successfully')"]

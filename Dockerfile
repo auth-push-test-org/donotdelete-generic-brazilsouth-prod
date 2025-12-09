@@ -1,10 +1,12 @@
-FROM maven:3-jdk-8-alpine
+FROM node:18-alpine
+WORKDIR /app
 
-WORKDIR /usr/src/app
+# Copy mock packages
+COPY mock-output /mock
 
-COPY . /usr/src/app
-RUN mvn package
-RUN echo test > out.out
-ENV PORT 5000
-EXPOSE $PORT
-CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]
+# Install each mock package globally
+RUN for d in /mock/*; do \
+      cd "$d" && npm pack && npm install -g *.tgz; \
+    done
+
+CMD ["node", "-e", "console.log('Mock packages installed successfully')"]
